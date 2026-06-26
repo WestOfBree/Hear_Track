@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "dateOfBirth": "1990-01-01",
+        "gender": "Male",
+        "address": "123 Main St, Anytown, USA",
+        "phoneNumber": "555-1234",
+        "email": "email@test.com",
+        "currentDeviceRight": "Device A",
+        "currentDeviceLeft": "Device B",
+        "lastApptDate": "2023-12-01",
+        "nextApptDate": "2024-01-15",
+        "nextApptType": "Routine Checkup",
+        "deviceStatusRight": "with patient",
+        "deviceStatusLeft": "with patient"
+    }
+]
