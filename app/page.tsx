@@ -6,7 +6,6 @@ import NavBar from "./UI/NavBar";
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col items-center justify-center bg-(--surface-muted) font-sans text-foreground">
-      <NavBar />
       <main className="flex w-full flex-1 flex-col items-center justify-between bg-(--surface) px-16 py-32 sm:items-start">
         <Image
           className=""
@@ -19,7 +18,6 @@ export default function Home() {
 
       </main>
     <section>
-     <ServiceTrackerModule />
 
     </section>
     </div>

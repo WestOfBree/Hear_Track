@@ -35,8 +35,8 @@ export default function NavBar() {
                 <Link href="/" className={pathname === "/" ? "text-white" : "text-gray-400"}>
                     Home
                 </Link>
-                <Link href="/about" className={pathname === "/about" ? "text-white" : "text-gray-400"}>
-                    About
+                <Link href="/RepairTracker" className={pathname === "/RepairTracker" ? "text-white" : "text-gray-400"}>
+                    Repair Tracker
                 </Link>
             </div>
             <button

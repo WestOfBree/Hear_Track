@@ -1,0 +1,301 @@
+export interface MockPatient {
+  id: number;
+  name: string;
+  dateOfBirth: string;
+  gender: string;
+  address: string;
+  phoneNumber: string;
+  email: string;
+  currentDeviceRight: string;
+  currentDeviceLeft: string;
+  lastApptDate: string;
+  nextApptDate: string;
+  nextApptType: string;
+  deviceStatusRight: string;
+  deviceStatusLeft: string;
+  invoiceDate: string;
+  columnKey: string;
+}
+export interface PatientsByColumn {
+  [key: string]: MockPatient[];
+}
+export type ColumnKey = "new-repairs" | "in-progress" | "completed" | "with-patient";
+
+const formatDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
+export const createInvoiceDate = (daysAgo: number) => {
+  const invoiceDate = new Date();
+  invoiceDate.setDate(invoiceDate.getDate() - daysAgo);
+
+  return formatDate(invoiceDate);
+};
+
+const basePatients: Omit<MockPatient, "invoiceDate">[] = [
+  {
+    id: 1,
+    name: "Peregrin Took",
+    dateOfBirth: "1990-01-01",
+    gender: "Male",
+    address: "123 Main St, Shire, Middle-earth",
+    phoneNumber: "555-1234",
+    email: "email@test.com",
+    currentDeviceRight: "Device A",
+    currentDeviceLeft: "Device B",
+    lastApptDate: "2023-12-01",
+    nextApptDate: "2024-01-15",
+    nextApptType: "Routine Checkup",
+    deviceStatusRight: "in repair",
+    deviceStatusLeft: "with-patient",
+    columnKey: "new-repairs",
+  },
+  {
+    id: 2,
+    name: "Meriadoc Brandybuck",
+    dateOfBirth: "1988-04-12",
+    gender: "Male",
+    address: "456 Oak Ave, Shire, Middle-earth",
+    phoneNumber: "555-5678",
+    email: "email2@test.com",
+    currentDeviceRight: "Device C",
+    currentDeviceLeft: "Device D",
+    lastApptDate: "2023-12-08",
+    nextApptDate: "2024-01-22",
+    nextApptType: "Repair Follow-Up",
+    deviceStatusRight: "with-patient",
+    deviceStatusLeft: "in-repair",
+    columnKey: "in-progress",
+  },
+  {
+    id: 3,
+    name: "Bilbo Baggins",
+    dateOfBirth: "1979-09-30",
+    gender: "Non-binary",
+    address: "789 Pine Rd, Shire, Middle-earth",
+    phoneNumber: "555-9012",
+    email: "email3@test.com",
+    currentDeviceRight: "Device E",
+    currentDeviceLeft: "Device F",
+    lastApptDate: "2023-12-15",
+    nextApptDate: "2024-02-01",
+    nextApptType: "Replacement Review",
+    deviceStatusRight: "ordered",
+    deviceStatusLeft: "ordered",
+    columnKey: "with-patient",
+  },
+    {
+    id: 4,
+    name: "Frodo Baggins",
+    dateOfBirth: "1985-09-22",
+    gender: "Male",
+    address: "101 Hobbiton Rd, Shire, Middle-earth",
+    phoneNumber: "555-3456",
+    email: "email4@test.com",
+    currentDeviceRight: "Device E",
+    currentDeviceLeft: "Device F",
+    lastApptDate: "2023-12-15",
+    nextApptDate: "2024-02-01",
+    nextApptType: "Replacement Review",
+    deviceStatusRight: "with-patient",
+    deviceStatusLeft: "with-patient",
+    columnKey: "with-patient",
+  },
+    {
+    id: 5,
+    name: "Elrond Undómiel",
+    dateOfBirth: "1979-09-30",
+    gender: "Non-binary",
+    address: "789 Pine Rd, Rivendell, Middle-earth",
+    phoneNumber: "555-9012",
+    email: "email5@test.com",
+    currentDeviceRight: "Device E",
+    currentDeviceLeft: "Device F",
+    lastApptDate: "2023-12-15",
+    nextApptDate: "2024-02-01",
+    nextApptType: "Replacement Review",
+    deviceStatusRight: "in repair",
+    deviceStatusLeft: "ordered",
+    columnKey: "in-progress",
+  },
+  {
+    id: 6,
+    name: "Samwise Gamgee",
+    dateOfBirth: "1987-04-06",
+    gender: "Male",
+    address: "6 Bagshot Row, Shire, Middle-earth",
+    phoneNumber: "555-1106",
+    email: "samwise@test.com",
+    currentDeviceRight: "Device G",
+    currentDeviceLeft: "Device H",
+    lastApptDate: "2023-12-19",
+    nextApptDate: "2024-02-08",
+    nextApptType: "Routine Checkup",
+    deviceStatusRight: "in-repair",
+    deviceStatusLeft: "with-patient",
+    columnKey: "with-patient",
+  },
+  {
+    id: 7,
+    name: "Aragorn Elessar",
+    dateOfBirth: "1982-03-01",
+    gender: "Male",
+    address: "1 Citadel Way, Minas Tirith, Gondor",
+    phoneNumber: "555-1107",
+    email: "aragorn@test.com",
+    currentDeviceRight: "Device I",
+    currentDeviceLeft: "Device J",
+    lastApptDate: "2023-12-21",
+    nextApptDate: "2024-02-12",
+    nextApptType: "Repair Follow-Up",
+    deviceStatusRight: "in-repair",
+    deviceStatusLeft: "with-patient",
+    columnKey: "in-progress",
+  },
+  {
+    id: 8,
+    name: "Legolas Greenleaf",
+    dateOfBirth: "1991-06-17",
+    gender: "Male",
+    address: "8 Woodland Path, Mirkwood, Middle-earth",
+    phoneNumber: "555-1108",
+    email: "legolas@test.com",
+    currentDeviceRight: "Device K",
+    currentDeviceLeft: "Device L",
+    lastApptDate: "2023-12-23",
+    nextApptDate: "2024-02-14",
+    nextApptType: "Replacement Review",
+    deviceStatusRight: "ordered",
+    deviceStatusLeft: "with-patient",
+    columnKey: "completed",
+  },
+  {
+    id: 9,
+    name: "Gimli Gloinson",
+    dateOfBirth: "1984-11-02",
+    gender: "Male",
+    address: "9 Stone Hall, Erebor, Middle-earth",
+    phoneNumber: "555-1109",
+    email: "gimli@test.com",
+    currentDeviceRight: "Device M",
+    currentDeviceLeft: "Device N",
+    lastApptDate: "2023-12-24",
+    nextApptDate: "2024-02-16",
+    nextApptType: "Routine Checkup",
+    deviceStatusRight: "in-repair",
+    deviceStatusLeft: "with-patient",
+    columnKey: "new-repairs",
+  },
+  {
+    id: 10,
+    name: "Gandalf Mithrandir",
+    dateOfBirth: "1975-01-10",
+    gender: "Male",
+    address: "10 White Tower, Minas Tirith, Gondor",
+    phoneNumber: "555-1110",
+    email: "gandalf@test.com",
+    currentDeviceRight: "Device O",
+    currentDeviceLeft: "Device P",
+    lastApptDate: "2023-12-26",
+    nextApptDate: "2024-02-20",
+    nextApptType: "Repair Follow-Up",
+    deviceStatusRight: "in-repair",
+    deviceStatusLeft: "in-repair",
+    columnKey: "in-progress",
+  },
+  {
+    id: 11,
+    name: "Arwen Undómiel",
+    dateOfBirth: "1993-02-14",
+    gender: "Female",
+    address: "11 Elven Court, Rivendell, Middle-earth",
+    phoneNumber: "555-1111",
+    email: "arwen@test.com",
+    currentDeviceRight: "Device Q",
+    currentDeviceLeft: "Device R",
+    lastApptDate: "2023-12-27",
+    nextApptDate: "2024-02-21",
+    nextApptType: "Routine Checkup",
+    deviceStatusRight: "with-patient",
+    deviceStatusLeft: "in-repair",
+    columnKey: "in-progress",
+  },
+  {
+    id: 12,
+    name: "Boromir Denethorson",
+    dateOfBirth: "1986-08-09",
+    gender: "Male",
+    address: "12 Guard Barracks, Minas Tirith, Gondor",
+    phoneNumber: "555-1112",
+    email: "boromir@test.com",
+    currentDeviceRight: "Device S",
+    currentDeviceLeft: "Device T",
+    lastApptDate: "2023-12-28",
+    nextApptDate: "2024-02-24",
+    nextApptType: "Replacement Review",
+    deviceStatusRight: "with-patient",
+    deviceStatusLeft: "in-repair",
+    columnKey: "new-repairs",
+  },
+  {
+    id: 13,
+    name: "Faramir Denethorson",
+    dateOfBirth: "1989-10-13",
+    gender: "Male",
+    address: "13 Ranger Post, Ithilien, Gondor",
+    phoneNumber: "555-1113",
+    email: "faramir@test.com",
+    currentDeviceRight: "Device U",
+    currentDeviceLeft: "Device V",
+    lastApptDate: "2023-12-29",
+    nextApptDate: "2024-02-25",
+    nextApptType: "Repair Follow-Up",
+    deviceStatusRight: "with-patient",
+    deviceStatusLeft: "in-repair",
+    columnKey: "completed",
+  },
+  {
+    id: 14,
+    name: "Éowyn Shieldmaiden",
+    dateOfBirth: "1992-12-05",
+    gender: "Female",
+    address: "14 Golden Hall, Edoras, Rohan",
+    phoneNumber: "555-1114",
+    email: "eowyn@test.com",
+    currentDeviceRight: "Device W",
+    currentDeviceLeft: "Device X",
+    lastApptDate: "2023-12-30",
+    nextApptDate: "2024-02-27",
+    nextApptType: "Routine Checkup",
+    deviceStatusRight: "in-repair",
+    deviceStatusLeft: "with-patient",
+    columnKey: "completed",
+  },
+  {
+    id: 15,
+    name: "Galadriel Nerwen",
+    dateOfBirth: "1981-05-21",
+    gender: "Female",
+    address: "15 Mallorn Walk, Lothlórien, Middle-earth",
+    phoneNumber: "555-1115",
+    email: "galadriel@test.com",
+    currentDeviceRight: "Device Y",
+    currentDeviceLeft: "Device Z",
+    lastApptDate: "2023-12-31",
+    nextApptDate: "2024-03-01",
+    nextApptType: "Replacement Review",
+    deviceStatusRight: "in-repair",
+    deviceStatusLeft: "with-patient",
+    columnKey: "completed",
+  },
+];
+
+export const getMockPatientData = (): MockPatient[] =>
+  basePatients.map((patient, index) => ({
+    ...patient,
+    invoiceDate: createInvoiceDate(index * 7),
+  }));
