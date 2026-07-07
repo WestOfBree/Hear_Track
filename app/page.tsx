@@ -1,7 +1,6 @@
 'use client';
 import Image from "next/image";
-import ServiceTrackerModule from "./UI/ServiceTrackerModule";
-import NavBar from "./UI/NavBar";
+import LoginModule from "./UI/LoginModule";
 
 export default function Home() {
   return (
@@ -15,7 +14,7 @@ export default function Home() {
           height={20}
           priority
         />
-
+    <LoginModule />
       </main>
     <section>
 

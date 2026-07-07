@@ -1,10 +1,14 @@
+"use client";
+
 import ServiceTrackerModule from "../UI/ServiceTrackerModule";
+import ProtectedRoute from "../UI/ProtectedRoute";
 
 export default function RepairTracker() {
     return (
-        <div>
-
-            <ServiceTrackerModule />
-        </div>
+        <ProtectedRoute>
+            <div>
+                <ServiceTrackerModule />
+            </div>
+        </ProtectedRoute>
     );
 }
