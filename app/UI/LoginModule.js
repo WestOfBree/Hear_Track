@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { auth } from "../Firebase/init";
 import {
@@ -61,9 +61,16 @@ export default function LoginModule() {
     console.log("Login function called");
   }
 
-  onAuthStateChanged(auth, (user) => {
-    console.log("Auth state changed:", user);
-  });
+  useEffect(() => {
+    // Only subscribe once auth is initialized in the browser
+    if (!auth) return;
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth state changed:", user);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   if (isRegisterMode) {
     return (
